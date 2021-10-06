@@ -66,6 +66,8 @@ public class User implements UserDetails, Serializable {
         return id;
     }
 
+    public void setId(Long id) { this.id = id; }
+
     public String getFirstName() {
         return firstName;
     }
@@ -112,6 +114,14 @@ public class User implements UserDetails, Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

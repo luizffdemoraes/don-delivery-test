@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,7 +15,6 @@ public class ItemOrder implements Serializable {
     @JsonIgnore
     @EmbeddedId
     private ItemOrderPK id = new ItemOrderPK();
-    @Min(value = 0, message = "Não e permitido, quantidade negativa.")
     private Integer quantity;
     private Double price;
 

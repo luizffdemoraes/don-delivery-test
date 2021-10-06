@@ -7,6 +7,7 @@ import com.doncorleone.dondelivery.entities.enums.OrderStatus;
 import com.doncorleone.dondelivery.repositories.ItemOrderRepository;
 import com.doncorleone.dondelivery.repositories.OrderRepository;
 import com.doncorleone.dondelivery.repositories.ProductRepository;
+import com.doncorleone.dondelivery.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,9 @@ public class OrderService {
     private ProductService productService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ItemOrderRepository itemOrderRepository;
 
     public OrderDTO find(Long id) {
@@ -35,16 +39,19 @@ public class OrderService {
 
     @Transactional
     public Order insert(Order order) {
+        System.out.println("teste1");
         order.setId(null);
         order.setMoment(Instant.now());
+        order.setUser(userRepository.getById(order.getUser().getId()));
         order.setStatus(OrderStatus.PENDING);
         System.out.println(order.toString());
+        order = repository.save(order);
 
         for (ItemOrder itemOrder : order.getItens()) {
             itemOrder.setProduct(productService.find(itemOrder.getProduct().getId()));
             itemOrder.setPrice(itemOrder.getProduct().getPrice());
             itemOrder.setOrder(order);
-            System.out.println("teste");
+            System.out.println("teste2");
         }
 
         itemOrderRepository.saveAll(order.getItens());
